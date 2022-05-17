@@ -58,12 +58,12 @@ jobs:
         include:
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: go build -o aide.exe main.go
+            CMD_BUILD: go build main.go
             OUT_FILE_NAME: aide.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
           - os: ubuntu-latest
             TARGET: ubuntu
-            CMD_BUILD: go build -o aide main.go
+            CMD_BUILD: go build main.go
             OUT_FILE_NAME: aide
             ASSET_MIME: application/x-binary
 
@@ -72,7 +72,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.16.5
+          go-version: 1.16
 
       - name: Build with for ${{ matrix.TARGET }}
         run: ${{ matrix.CMD_BUILD }}
