@@ -8,7 +8,7 @@ import (
 
 func CreateListFile(argPathList string)  {
 	//create file access.log
-	f, err := os.OpenFile("access.log", os.O_CREATE|os.O_WRONLY, 0644)
+	f, err := os.OpenFile(argPathList+"/"+"access.log", os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
