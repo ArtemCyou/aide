@@ -10,7 +10,7 @@ import (
 )
 
 func CreateFile(argPathCreate string) {
-	nameExtension := []string{".txt", ".dox", ".zip"}
+	nameExtension := []string{".txt", ".doc", ".zip"}
 
 	print("Введите максимальное количество файлов которые нужно создать: ")
 	askInt, err := bufio.NewReader(os.Stdin).ReadString('\n')
