@@ -58,12 +58,12 @@ jobs:
         include:
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: go build main.go
+            CMD_BUILD: go build -o aide.exe main.go
             OUT_FILE_NAME: aide.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
           - os: ubuntu-latest
             TARGET: ubuntu
-            CMD_BUILD: go build main.go
+            CMD_BUILD: go build -o aide main.go
             OUT_FILE_NAME: aide
             ASSET_MIME: application/x-binary
 
