@@ -15,7 +15,7 @@ func main() {
 	argPathClean := flag.String("clean", ".", "Очистить целевой каталог")
 	argPathGroup := flag.String("dir", ".", "Dir для группировки файлов")
 	argPathList := flag.String("list", ".", "Создает документ со списком всех файлов в директории")
-	argPathCreate:= flag.String("file", ".","Создает нужное кол-во файлов в указанной директории")
+	argPathCreate := flag.String("file", ".", "Создает нужное кол-во файлов в указанной директории")
 	flag.Parse()
 
 	switch os.Args[1] {
@@ -62,6 +62,13 @@ func groupFiles(argPathGroup string) {
 		".deny",
 		".allow",
 		".exe",
+		".zip",
+		".rar",
+		".mp4",
+		".jpeg",
+		".mp3",
+		".mov",
+		".go",
 	}
 	files, err := os.ReadDir(argPathGroup)
 	pikaFatal(err)
