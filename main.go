@@ -76,12 +76,12 @@ func groupFiles(argPathGroup string) {
 	for _, file := range files {
 		for _, ext := range filesExtension {
 			if strings.HasSuffix(file.Name(), ext) {
-				newDirPath := argPathGroup + "ALL" + strings.ToUpper(ext)
+				newDirPath := argPathGroup + "/" + "ALL" + strings.ToUpper(ext)
 				if _, err := os.Stat(newDirPath); os.IsNotExist(err) {
 					err := os.Mkdir(newDirPath, 0644)
 					pikaFatal(err)
 				}
-				err := os.Rename(argPathGroup+file.Name(), newDirPath+"/"+file.Name())
+				err := os.Rename(argPathGroup+"/"+file.Name(), newDirPath+"/"+file.Name())
 				pikaFatal(err)
 			}
 		}
