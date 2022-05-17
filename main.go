@@ -7,12 +7,15 @@ import (
 	"os"
 	"path"
 	"strings"
+	"paramDop/param"
 )
 
 func main() {
 
 	argPathClean := flag.String("clean", ".", "Очистить целевой каталог")
 	argPathGroup := flag.String("dir", ".", "Dir для группировки файлов")
+	argPathList := flag.String("list", ".", "Создает документ со списком всех файлов в директории")
+	argPathCreate:= flag.String("file", ".","Создает нужное кол-во файлов в указанной директории")
 	flag.Parse()
 
 	switch os.Args[1] {
@@ -22,6 +25,12 @@ func main() {
 	case "-dir":
 		fmt.Println(*argPathGroup)
 		groupFiles(*argPathGroup)
+	case "-list":
+		fmt.Println(*argPathList)
+		param.CreateListFile(*argPathList)
+	case "-file":
+		fmt.Println(*argPathCreate)
+		param.CreateFile(*argPathCreate)
 	default:
 		os.Exit(1)
 	}
