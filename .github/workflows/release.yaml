@@ -58,7 +58,7 @@ jobs:
         include:
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: go build -o aide.exe main.go
+            CMD_BUILD: go build -o aide.exe -ldflags "-s -w" main.go
             OUT_FILE_NAME: aide.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
           - os: ubuntu-latest
