@@ -34,7 +34,6 @@ func main() {
 	default:
 		os.Exit(1)
 	}
-
 }
 
 func cleanDir(argPathClean string) {
