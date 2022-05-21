@@ -10,6 +10,7 @@ import (
 )
 
 func CreateFile(argPathCreate string) {
+	AntiDummy(argPathCreate)
 	nameExtension := []string{".txt", ".doc", ".zip"}
 
 	print("Введите максимальное количество файлов которые нужно создать: ")
