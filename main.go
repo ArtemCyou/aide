@@ -38,6 +38,8 @@ func main() {
 }
 
 func cleanDir(argPathClean string) {
+	param.AntiDummy(argPathClean)
+
 	pathDir, err := os.ReadDir(argPathClean)
 	pikaFatal(err)
 	for _, f := range pathDir {
@@ -73,16 +75,29 @@ func groupFiles(argPathGroup string) {
 	files, err := os.ReadDir(argPathGroup)
 	pikaFatal(err)
 
+	param.AntiDummy(argPathGroup)
+
 	for _, file := range files {
-		for _, ext := range filesExtension {
-			if strings.HasSuffix(file.Name(), ext) {
-				newDirPath := argPathGroup + "/" + "ALL" + strings.ToUpper(ext)
-				if _, err := os.Stat(newDirPath); os.IsNotExist(err) {
-					err := os.Mkdir(newDirPath, 0644)
-					pikaFatal(err)
+		if strings.Contains(file.Name(), os.Args[0]) {
+			continue
+		} else {
+			for _, ext := range filesExtension {
+				if strings.HasSuffix(file.Name(), ext) {
+					newDir := argPathGroup + "/" + "ALL" + strings.ToUpper(ext)
+					if _, err := os.Stat(newDir); os.IsNotExist(err) {
+						err := os.Mkdir(newDir, 0644)
+						pikaFatal(err)
+
+					}
+
+					if _, err := os.Stat(newDir + "/" + file.Name()); !os.IsNotExist(err) {
+						err := os.Rename(argPathGroup+"/"+file.Name(), newDir+"/"+"new"+file.Name())
+						pikaFatal(err)
+					} else {
+						err := os.Rename(argPathGroup+"/"+file.Name(), newDir+"/"+file.Name())
+						pikaFatal(err)
+					}
 				}
-				err := os.Rename(argPathGroup+"/"+file.Name(), newDirPath+"/"+file.Name())
-				pikaFatal(err)
 			}
 		}
 	}
