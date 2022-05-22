@@ -48,32 +48,56 @@ func cleanDir(argPathClean string) {
 }
 
 func groupFiles(argPathGroup string) {
-	filesExtension := []string{
-		".txt",
-		".doc",
-		".docx",
-		".pdf",
-		".xlsx",
-		".bmp",
-		".jpg",
-		".rtf",
-		".pptx",
-		".conf",
-		".cfg",
-		".net",
-		".deny",
-		".allow",
-		".exe",
-		".zip",
-		".rar",
-		".mp4",
-		".jpeg",
-		".mp3",
-		".mov",
-		".go",
-	}
+	//filesExtension := []string{
+	//	".txt",
+	//	".doc",
+	//	".docx",
+	//	".pdf",
+	//	".xlsx",
+	//	".bmp",
+	//	".jpg",
+	//	".rtf",
+	//	".pptx",
+	//	".conf",
+	//	".cfg",
+	//	".net",
+	//	".deny",
+	//	".allow",
+	//	".exe",
+	//	".zip",
+	//	".rar",
+	//	".mp4",
+	//	".jpeg",
+	//	".mp3",
+	//	".mov",
+	//	".go",
+	//}
+	var filesExtension []string
+	var dirtyExtFile []string
+	cleanKeys := make(map[string]bool)
+	count := 0
+
 	files, err := os.ReadDir(argPathGroup)
 	pikaFatal(err)
+
+	for _, fS := range files {
+		if fS.IsDir() {
+			continue
+		} else {
+			aFile := strings.Split(fS.Name(), ".")
+			extFile := "." + aFile[1]
+			dirtyExtFile = append(dirtyExtFile, extFile)
+		}
+	}
+
+	for _, ext := range dirtyExtFile {
+		if _, ok := cleanKeys[ext]; !ok {
+			cleanKeys[ext] = true
+			dirtyExtFile[count] = ext
+			count++
+		}
+	}
+	filesExtension = dirtyExtFile[:count]
 
 	param.AntiDummy(argPathGroup)
 
@@ -87,7 +111,6 @@ func groupFiles(argPathGroup string) {
 					if _, err := os.Stat(newDir); os.IsNotExist(err) {
 						err := os.Mkdir(newDir, 0644)
 						pikaFatal(err)
-
 					}
 
 					if _, err := os.Stat(newDir + "/" + file.Name()); !os.IsNotExist(err) {
