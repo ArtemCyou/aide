@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"strconv"
 	"strings"
 	"paramDop/param"
 )
@@ -61,7 +62,7 @@ func groupFiles(argPathGroup string) {
 			continue
 		} else {
 			aFile := strings.Split(fS.Name(), ".")
-			extFile := "." + aFile[1]
+			extFile := "." + aFile[1] // может быть косяк если в имени файла есть несколько точек
 			dirtyExtFile = append(dirtyExtFile, extFile)
 		}
 	}
@@ -78,7 +79,7 @@ func groupFiles(argPathGroup string) {
 	param.AntiDummy(argPathGroup)
 
 	for _, file := range files {
-		if strings.Contains(file.Name(), os.Args[0]) {
+		if strings.Contains(os.Args[0], file.Name()) {
 			continue
 		} else {
 			for _, ext := range filesExtension {
@@ -89,12 +90,27 @@ func groupFiles(argPathGroup string) {
 						pikaFatal(err)
 					}
 
-					if _, err := os.Stat(newDir + "/" + file.Name()); !os.IsNotExist(err) {
-						err := os.Rename(argPathGroup+"/"+file.Name(), newDir+"/"+"new"+file.Name())
-						pikaFatal(err)
-					} else {
-						err := os.Rename(argPathGroup+"/"+file.Name(), newDir+"/"+file.Name())
-						pikaFatal(err)
+					y := true
+					newPath := newDir + "/" + file.Name()
+					var newName string
+
+					for i := 1; y; i++ {
+						if _, err := os.Stat(newPath); !os.IsNotExist(err) {
+							fR:= strings.Split(file.Name(), " ")
+
+							if strings.Contains(file.Name(), "New"){
+								fR[0] = "New"+ strconv.Itoa(i)
+								newName = strings.Join(fR, " ")
+								newPath = newDir + "/" + newName
+							} else {
+							newPath = newDir + "/" + "New"+ strconv.Itoa(i) + " " + file.Name()
+							}
+
+						} else {
+							err := os.Rename(argPathGroup+"/"+file.Name(), newPath)
+							pikaFatal(err)
+							y = false
+						}
 					}
 				}
 			}
