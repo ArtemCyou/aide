@@ -47,30 +47,7 @@ func cleanDir(argPathClean string) {
 }
 
 func groupFiles(argPathGroup string) {
-	//filesExtension := []string{
-	//	".txt",
-	//	".doc",
-	//	".docx",
-	//	".pdf",
-	//	".xlsx",
-	//	".bmp",
-	//	".jpg",
-	//	".rtf",
-	//	".pptx",
-	//	".conf",
-	//	".cfg",
-	//	".net",
-	//	".deny",
-	//	".allow",
-	//	".exe",
-	//	".zip",
-	//	".rar",
-	//	".mp4",
-	//	".jpeg",
-	//	".mp3",
-	//	".mov",
-	//	".go",
-	//}
+
 	var filesExtension []string
 	var dirtyExtFile []string
 	cleanKeys := make(map[string]bool)
