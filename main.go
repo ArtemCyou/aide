@@ -91,7 +91,7 @@ func groupFiles(argPathGroup string) {
 				}
 
 				y := true
-				newPath := fmt.Sprint(newDir + "/" + file.Name())
+				newPath := fmt.Sprint(newDir, "/", file.Name())
 				var newName string
 
 				for i := 1; y; i++ {
