@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 	"path"
-	"strconv"
 	"strings"
 	"paramDop/param"
 )
@@ -62,7 +61,8 @@ func groupFiles(argPathGroup string) {
 			continue
 		} else {
 			aFile := strings.Split(fS.Name(), ".")
-			extFile := "." + aFile[1] // может быть косяк если в имени файла есть несколько точек
+			bFile := len(aFile) - 1
+			extFile := fmt.Sprint(".", aFile[bFile])
 			dirtyExtFile = append(dirtyExtFile, extFile)
 		}
 	}
@@ -81,36 +81,35 @@ func groupFiles(argPathGroup string) {
 	for _, file := range files {
 		if strings.Contains(os.Args[0], file.Name()) {
 			continue
-		} else {
-			for _, ext := range filesExtension {
-				if strings.HasSuffix(file.Name(), ext) {
-					newDir := argPathGroup + "/" + "ALL" + strings.ToUpper(ext)
-					if _, err := os.Stat(newDir); os.IsNotExist(err) {
-						err := os.Mkdir(newDir, 0644)
-						pikaFatal(err)
-					}
+		}
+		for _, ext := range filesExtension {
+			if strings.HasSuffix(file.Name(), ext) {
+				newDir := fmt.Sprint(argPathGroup, "/", "ALL", strings.ToUpper(ext))
+				if _, err := os.Stat(newDir); os.IsNotExist(err) {
+					err := os.Mkdir(newDir, 0644)
+					pikaFatal(err)
+				}
 
-					y := true
-					newPath := newDir + "/" + file.Name()
-					var newName string
+				y := true
+				newPath := fmt.Sprint(newDir, "/", file.Name())
+				var newName string
 
-					for i := 1; y; i++ {
-						if _, err := os.Stat(newPath); !os.IsNotExist(err) {
-							fR:= strings.Split(file.Name(), " ")
+				for i := 1; y; i++ {
+					if _, err := os.Stat(newPath); !os.IsNotExist(err) {
+						fR := strings.Split(file.Name(), " ")
 
-							if strings.Contains(file.Name(), "New"){
-								fR[0] = "New"+ strconv.Itoa(i)
-								newName = strings.Join(fR, " ")
-								newPath = newDir + "/" + newName
-							} else {
-							newPath = newDir + "/" + "New"+ strconv.Itoa(i) + " " + file.Name()
-							}
-
+						if strings.Contains(file.Name(), "New") {
+							fR[0] = fmt.Sprint("New", i)
+							newName = strings.Join(fR, " ")
+							newPath = newDir + "/" + newName
 						} else {
-							err := os.Rename(argPathGroup+"/"+file.Name(), newPath)
-							pikaFatal(err)
-							y = false
+							newPath = fmt.Sprint(newDir, "/", "New", i, " ", file.Name())
 						}
+
+					} else {
+						err := os.Rename(argPathGroup+"/"+file.Name(), newPath)
+						pikaFatal(err)
+						y = false
 					}
 				}
 			}
