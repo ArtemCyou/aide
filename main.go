@@ -60,9 +60,7 @@ func groupFiles(argPathGroup string) {
 		if fS.IsDir() {
 			continue
 		} else {
-			aFile := strings.Split(fS.Name(), ".")
-			bFile := len(aFile) - 1
-			extFile := fmt.Sprint(".", aFile[bFile])
+			extFile := path.Ext(fS.Name())
 			dirtyExtFile = append(dirtyExtFile, extFile)
 		}
 	}
