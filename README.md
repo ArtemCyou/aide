@@ -1,5 +1,5 @@
 # Aide - твой помощник при работе с файлами
-![GitHub release)](https://img.shields.io/github/v/release/tomsquest/fynodoro?style=flat-square)
+![GitHub release)](https://img.shields.io/github/v/release/ArtemCyou/aide?style=flat-square)
 
 Запустите приложение через командную строку, с помощью флагов:
 
