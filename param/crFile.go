@@ -15,7 +15,6 @@ func CreateFile(argPathCreate string) {
 
 	print("Введите максимальное количество файлов которые нужно создать: ")
 	askInt, err := bufio.NewReader(os.Stdin).ReadString('\n')
-	//askInt, err := reader.ReadString('\n')
 	pikaFatal(err)
 
 	askIntNoSpace := strings.TrimSpace(askInt)
@@ -25,7 +24,7 @@ func CreateFile(argPathCreate string) {
 
 	for _, name := range nameExtension {
 		for i := 1; i <= x; i++ {
-			f, err := os.Create(argPathCreate+"/"+strconv.Itoa(i) + name)
+			f, err := os.Create(fmt.Sprint(argPathCreate,"/",i, name))
 			pikaFatal(err)
 			fmt.Println("file with name "+f.Name(), "was created")
 			f.Close()
